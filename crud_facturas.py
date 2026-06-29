@@ -1,13 +1,16 @@
 from conexion import db
 
 # CREATE
-def guardar_factura(usuario_id, empresa, monto, categoria):
+def guardar_factura(usuario_id, empresa, monto, categoria, detalles_json=None):
+    if detalles_json is None:
+        detalles_json = {}
 
     factura = {
         "usuario_id": usuario_id,
         "empresa": empresa,
         "monto": monto,
-        "categoria": categoria
+        "categoria": categoria,
+        "detalles": detalles_json
     }
 
     db.facturas.insert_one(factura)
@@ -25,8 +28,10 @@ def obtener_facturas():
 
 
 # UPDATE
-def actualizar_factura(usuario_id, empresa, monto, categoria):
-
+def actualizar_factura(usuario_id, empresa, monto, categoria, detalles_json=None):
+    if detalles_json is None:
+        detalles_json = {}
+        
     db.facturas.update_one(
         {"usuario_id": usuario_id},
         {
@@ -34,7 +39,8 @@ def actualizar_factura(usuario_id, empresa, monto, categoria):
             {
                 "empresa": empresa,
                 "monto": monto,
-                "categoria": categoria
+                "categoria": categoria,
+                "detalles": detalles_json
             }
         }
     )
@@ -63,3 +69,9 @@ def monto_total():
         )
 
     return total
+
+def obtener_notificaciones():
+    return list(db.notificaciones.find({}, {"_id": 0}))
+
+def obtener_sincronizaciones():
+    return list(db.sincronizaciones.find({}, {"_id": 0}))

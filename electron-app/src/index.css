@@ -1,0 +1,8 @@
+/* Se han eliminado los estilos predeterminados de Vite.
+   Toda la estilización principal está manejada en App.css */
+#root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
